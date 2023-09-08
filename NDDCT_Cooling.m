@@ -100,14 +100,14 @@ Tin=313.5475;
 %% integration initial
 pa3=pa1*(1-(0.00975*h3/Ta1))^3.5-15;
 v02=1.55;
-Twod=(Tin*3+Ta6)/4; % 干冷段出口水温估值
+Twod=(Tin*3+Ta6)/4; 
 i=1;
 p=1;
 m=1;
 n=1;
 q=1;
 delta_pf=0.51;
-while abs(delta_pf)>=0.5 % 外侧循环计算pa8
+while abs(delta_pf)>=0.5 % Outer Loop
 if delta_pf>0
     pa3=pa3+min(0.5,0.5*delta_pf);
 else
@@ -115,7 +115,7 @@ else
 end
 
 delta_fl_bad=0.21;
-while abs(delta_fl_bad)>=0.2 % 干冷段动力平衡
+while abs(delta_fl_bad)>=0.2 % Dry cooling section
 if delta_fl_bad>0
     v02=v02+min(0.002,abs(delta_fl_bad));
 else
@@ -137,14 +137,14 @@ cpwdm=8.15599e3-2.80627e1*(Twdm+273.15)/2+5.11283e-2*((Twdm+273.15)/2)^2-2.17582
 Qwd=mw*cpwdm*(Tin-Twod);
 Ta3=Qwd/(ma23*cpa2)+Ta2;
 
-niuwd=2.414*1e-5*10^(247.8/((Tin+Twod)/2-140));%水运动粘度
-Lamdawd=-6.14255e-1+6.9963e-3*((Tin+Twod)/2)-1.01075e-5*((Tin+Twod)/2)^2+4.74737e-12*((Tin+Twod)/2)^4;%水热导率
+niuwd=2.414*1e-5*10^(247.8/((Tin+Twod)/2-140));%water kinematic viscosity
+Lamdawd=-6.14255e-1+6.9963e-3*((Tin+Twod)/2)-1.01075e-5*((Tin+Twod)/2)^2+4.74737e-12*((Tin+Twod)/2)^4;%water thermal conductivity
 Prwd=niuwd*cpwdm/Lamdawd;
 Rhoaw=1/(1.49343*1e-3-3.7164*1e-6*((Tin+Twod)/2)+7.09782*1e-9*((Tin+Twod)/2)^2-1.90321*1e-20*((Tin+Twod)/2)^6);
 Rewd=mw*nwp*d/Ats/ntb/nb/niuwd;
-f=power(1.82*log10(Rewd)-1.64,-2);%水侧Darcy阻力系数
-Nuwd=(f/8)*(Rewd-1000)*Prwd*(1+power(d/Lte,2/3))/(1+12.7*power(f/8,0.5)*(power(Prwd,2/3)-1));%水侧换热的Nu数
-hw=Nuwd*Lamdawd/d;%当前水侧雷诺数下的换热系数
+f=power(1.82*log10(Rewd)-1.64,-2);%Water side drag coefficient
+Nuwd=(f/8)*(Rewd-1000)*Prwd*(1+power(d/Lte,2/3))/(1+12.7*power(f/8,0.5)*(power(Prwd,2/3)-1));%water side reynolds no
+hw=Nuwd*Lamdawd/d;%Heat transfer coefficient at current water side
 ha=45.448*power(v02,0.327);
 haeAa=ha*Afrd*31.93/0.3044;
 Aw=Ati*Lte*ntb*nb;
